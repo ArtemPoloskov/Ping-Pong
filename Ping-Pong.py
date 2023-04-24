@@ -25,9 +25,12 @@ class Player(GamesSprite):
             self.rect.y -= self.speed
         if keys[K_s] and self.rect.y < 700:
             self.rect.y += self.speed
-platform1 = Player('Plat.webp',20,300,30,100,10)
-platform2 = Player('Plat.webp',930,300,30,100,10)
+platform1 = Player('Plat2.jpg',20,300,30,200,10)
+platform2 = Player('Plat3.jpg',930,300,30,200,10)
+ball = GamesSprite('Maq.jpg',400,330,50,50,5)
 clock = time.Clock()
+s_x = 5
+s_y = 5
 game = True
 while game:
     clock.tick(60)
@@ -36,6 +39,17 @@ while game:
     platform1.reset()
     platform2.move2()
     platform2.reset()
+    ball.rect.x += s_x
+    ball.rect.y += s_y
+    if ball.rect.y >= 650:
+        s_y *= -1
+    if ball.rect.y <= 0:
+        s_y *= -1
+    if sprite.collide_rect(ball,platform1):
+        s_x *= -1
+    if sprite.collide_rect(ball,platform2):
+        s_x *= -1    
+    ball.reset()
     for e in event.get():
         if e.type == QUIT:
             game = False
